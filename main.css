@@ -1,0 +1,44 @@
+.header {
+  margin: 50px;
+  font-family: Georgia;
+  font-weight: bold;
+  text-align: center;
+}
+
+#toggle {
+  width: 200px;
+  text-align: center;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.box {
+  display: flex;
+  justify-content: space-around;
+  font-family: Georgia;
+  font-style: italic;
+  text-align: center;
+  padding: 20px;
+  margin: auto;
+  border-radius: 5px;
+  background-color: #DCDCDC;
+  max-width: 800px;
+  height: auto;
+}
+
+.item {
+  width: 200px;
+  padding-top: 15px;
+}
+
+#temp {
+  line-height: 100px;
+}
+
+h2 {
+  padding: 5px;
+}
+
+h4 {
+  padding: 10px;
+}
