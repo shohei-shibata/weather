@@ -37,7 +37,7 @@ $(document).ready(function() {
     $("#weather").html(weather);
 
     let countryCode = data.sys.country.toLowerCase();
-    $("#flag").html('<img src="http://flags.fmcdn.net/data/flags/w580/' + countryCode + '.png" alt="Flag" height="42" width=auto>');
+    $("#flag").html('<img src="http://flags.fmcdn.net/data/flags/w580/' + countryCode + '.png" alt="Flag" height="60" width=auto>');
 
     tempC = Math.round(data.main.temp - 273.15);
     tempF = tempC*1.8+32;
