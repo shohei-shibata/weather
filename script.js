@@ -18,11 +18,20 @@ $(document).ready(function() {
 
   // render weather info
   function renderWeather(data) {
+    const sunrise = new Date(data.sys.sunrise*1000);
+    const sunset = new Date(data.sys.sunset*1000);
+    const now = new Date();
+    const timeOfDay = "Night";
+    
+    if (now > sunrise && now < sunset) {
+      timeOfDay = "Day"
+    } 
+    
     const tempC = Math.round(data.main.temp - 273.15);
     const tempF = (tempC*1.8+32);
     const photoApiParam = {
             client_id: '476956470426f88af2c52f4cd382307ad3ba28bb1a87df02b260b045ffcf14fd',
-            query: data.weather[0].main,
+            query: data.weather[0].main + " " + timeOfDay,
             w: $(window).width()
           };
         
