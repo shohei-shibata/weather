@@ -21,7 +21,7 @@ $(document).ready(function() {
     const sunrise = new Date(data.sys.sunrise*1000);
     const sunset = new Date(data.sys.sunset*1000);
     const now = new Date();
-    const timeOfDay = "Night";
+    let timeOfDay = "Night";
     
     if (now > sunrise && now < sunset) {
       timeOfDay = "Day"
