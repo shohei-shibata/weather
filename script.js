@@ -21,17 +21,32 @@ $(document).ready(function() {
     const sunrise = new Date(data.sys.sunrise*1000);
     const sunset = new Date(data.sys.sunset*1000);
     const now = new Date();
-    let timeOfDay = "Night";
+    let timeOfDay = 'Night';
+    if (now > sunrise && now < sunset) { timeOfDay = 'Day'; } 
     
-    if (now > sunrise && now < sunset) {
-      timeOfDay = "Day"
-    } 
+    let query = '';
+    
+    switch (data.weather[0].main) {
+      case 'Clear':
+        query = timeOfDay + " clear sky";
+        break;
+      case 'Clouds':
+      case 'Atmosphere':
+      case 'Extreme':
+      case 'Additional':
+        query = data.weather[0].description;
+        break;
+      default:
+        query = data.weather[0].main;
+    }
+    
+    console.log(query);
     
     const tempC = Math.round(data.main.temp - 273.15);
-    const tempF = (tempC*1.8+32);
+    const tempF = Math.round(tempC*1.8+32);
     const photoApiParam = {
             client_id: '476956470426f88af2c52f4cd382307ad3ba28bb1a87df02b260b045ffcf14fd',
-            query: data.weather[0].main + " " + timeOfDay,
+            query: query,
             w: $(window).width()
           };
         
