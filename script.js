@@ -99,10 +99,11 @@ function weatherHourly(data) {
   data.list.splice(5, 100);
   
   data.list.forEach(function(item) {
+    console.log(item);
     let time = new Date(item.dt*1000);
-    let weather = item.main;
+    let weather = item.weather[0].main;
     let content = "<div class='table-col'><p>"
-        + time + "</p><p>" + weather + "</p></div>";
+        + time.getHours() + ":00</p><p>" + weather + "</p></div>";
     $(".table-wrapper").append(content);
   });
 }
