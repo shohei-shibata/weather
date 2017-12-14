@@ -1,29 +1,27 @@
-/* global $ */
-const locationApi = 'https://ipinfo.io/json/';
+/* global $ navigator*/
 const photoApi = 'https://api.unsplash.com/photos/random';
 const regex1 = /(℃)/;
 const regex2 = /(Arrow)/;
 
 $(document).ready(function() {
   // get geo coordinates
-  $.getJSON(locationApi, function(result){
-      const countryCode = result.country.toLowerCase();
-      const coordinates = result.loc.split(',');
-      const apiQuery = 'lat=' + coordinates[0].toString() 
-                      +'&lon=' + coordinates[1].toString()
-                      + '&appid=60f3ac8fb5707821382a20440c2e42d1'
-      
-      const weatherNowApi = 'https://api.openweathermap.org/data/2.5/weather?' + apiQuery;
-      const weatherHourlyApi = 'https://api.openweathermap.org/data/2.5/forecast?' + apiQuery;
+  navigator.geolocation.getCurrentPosition(function(result) {
+    const lat = result.coords.latitude;
+    const long = result.coords.longitude;
+    const apiQuery = 'lat=' + lat +'&lon=' + long
+                    + '&appid=60f3ac8fb5707821382a20440c2e42d1';
+    
+    const weatherNowApi = 'https://api.openweathermap.org/data/2.5/weather?' + apiQuery;
+    const weatherHourlyApi = 'https://api.openweathermap.org/data/2.5/forecast?' + apiQuery;
 
-      // get current weather
-      $.getJSON(weatherNowApi, function(result){
-          weatherNow(result);
-      });
-      // get forecast
-      $.getJSON(weatherHourlyApi, function(result){
-          weatherHourly(result);
-      });
+    // get current weather
+    $.getJSON(weatherNowApi, function(result){
+        weatherNow(result);
+    });
+    // get forecast
+    $.getJSON(weatherHourlyApi, function(result){
+        weatherHourly(result);
+    });
   });
   
   $("body").keydown(function(e) {
@@ -65,45 +63,38 @@ function weatherNow(data) {
           query: query,
           w: $(window).width()
         };
-      
+
+  $(".temp2").html(tempF + "℉");     
   $(".temp1").html(tempC + "℃");
-  $(".slash").html(" / ");
-  $(".temp2").html(tempF + "℉");
-  
-  $(".temp2").on("click", function() {
-    if (regex1.test($(".temp1").text())) {
-      $(".temp1").html(tempF + "℉");
-      $(".temp2").html(tempC + "℃");
-    } else {
-      $(".temp1").html(tempC + "℃");
-      $(".temp2").html(tempF + "℉");
-    }
-  });
-  
   $(".city").html(data.name + ", " + data.sys.country);
-  
+  $(".sub-heading").html('Now');
   $(".description").html(data.weather[0].description);
   
-/*    // get background photo from Unsplash
+    // get background photo from Unsplash
   $.getJSON(photoApi, photoApiParam, function(result, status) {
       console.log('photo api', status);
       const creditLink = "<a href="+result.user.links.html+" target='_blank'>"+result.user.name+"</a>";
-      const creditText = "Photo by "+creditLink+" @ Unsplash";
-      $(".credit-photo").html(creditText);
+      const creditText = "<p>Photo by "+creditLink+" @ Unsplash</p>";
+      $(".photo").html(creditText);
       setBackground(result);
   });
-*/    
+    
 }
 
 function weatherHourly(data) {
   data.list.splice(5, 100);
   
   data.list.forEach(function(item) {
-    console.log(item);
-    let time = new Date(item.dt*1000);
-    let weather = item.weather[0].main;
-    let content = "<div class='table-col'><p>"
-        + time.getHours() + ":00</p><p>" + weather + "</p></div>";
+    const time = new Date(item.dt*1000);
+    const tempC = Math.round(item.main.temp - 273.15);
+    const tempF = Math.round(tempC*1.8+32);
+    const weather = item.weather[0].main;
+    const content = "<div class='table-col'>" 
+        + "<p>" + time.getHours() + ":00</p>" 
+        + "<div class='temp-forecast'>" 
+          + "<p class='temp2 hidden'>" + tempF + "℉</p>"
+          + "<p class='temp1'>" + tempC + "℃</p></div>"
+        + "<p>" + weather + "</p>";
     $(".table-wrapper").append(content);
   });
 }
@@ -132,7 +123,18 @@ function handleKeydown(key) {
       } else if ($("#now").hasClass("center")) {
         //nothing for now, because there is only two pages
       }
-      
+      break;
+    case "ArrowDown":
+      if (!$(".temp1").hasClass("bottom")) {
+        $(".temp1").toggleClass("bottom").toggleClass("hidden");
+        $(".temp2").toggleClass("bottom").toggleClass("hidden");
+      }
+      break;
+    case "ArrowUp":
+      if ($(".temp1").hasClass("bottom")) {
+        $(".temp1").toggleClass("bottom").toggleClass("hidden");
+        $(".temp2").toggleClass("bottom").toggleClass("hidden");
+      }
       break;
     default:
   }
