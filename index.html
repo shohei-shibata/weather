@@ -9,19 +9,28 @@
     <script src="script.js"></script>
   </head>
   <body>
-    <div class="contents">
+    <div class="page center" id="now">
       <div class="temperature">
         <span class="temp1"></span>
         <span class="slash"></span>
         <span class="temp2"></span>
       </div>
-      <h3 class="city"></h3>
+      <p class="city"></p>
       <h4 class="description"></h4>
-      <div class="credit-me">
-        <small>This page was built by Shohei Shibata <a href="http://shoheishibata.com/web-development/" target="_blank" rel="noopener noreferrer"><i class="fa fa-home" aria-hidden="true"></i></a>
-    		<a href="https://github.com/shibatas/" target="_blank" rel="noopener noreferrer"><i class="fa fa-github" aria-hidden="true"></i></a></small>
-      </div>
-      <div class="credit-photo"></div>
     </div>
+    <div class="page right" id="hourly">
+      <h3>Forecast</h3>
+      <p>City, Country</p>
+      <div class="table-wrapper">
+      </div>
+    </div>
+    <div class="credit weather">
+        <p>Weather information by<a href="https://openweathermap.org/" target="_blank" rel="noopener noreferrer">OpenWeatherMap</a>
+    </div>
+    <div class="credit me">
+        <p>This page was built by Shohei Shibata <a href="http://shoheishibata.com/web-development/" target="_blank" rel="noopener noreferrer"><i class="fa fa-home" aria-hidden="true"></i></a>
+    		<a href="https://github.com/shibatas/" target="_blank" rel="noopener noreferrer"><i class="fa fa-github" aria-hidden="true"></i></a></p>
+    </div>
+    <div class="credit photo"></div>
   </body>
 </html>
