@@ -6,6 +6,7 @@ const regex2 = /(Arrow)/;
 $(document).ready(function() {
   // get geo coordinates
   navigator.geolocation.getCurrentPosition(function(result) {
+    console.log('geo location success', result);
     const lat = result.coords.latitude;
     const long = result.coords.longitude;
     const apiQuery = 'lat=' + lat +'&lon=' + long
@@ -16,10 +17,12 @@ $(document).ready(function() {
 
     // get current weather
     $.getJSON(weatherNowApi, function(result){
+        console.log('get current weather success', result);
         weatherNow(result);
     });
     // get forecast
     $.getJSON(weatherHourlyApi, function(result){
+        console.log('get hourly weather success', result);
         weatherHourly(result);
     });
   });
