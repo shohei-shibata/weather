@@ -41,20 +41,20 @@ function weatherNow(data) {
   let timeOfDay = 'Night';
   if (now > sunrise && now < sunset) { timeOfDay = 'Day'; } 
   
-  let query = '';
+  let query = 'Sky ';
   
   switch (data.weather[0].main) {
     case 'Clear':
-      query = timeOfDay + " clear sky";
+      query += timeOfDay + " clear sky";
       break;
     case 'Clouds':
     case 'Atmosphere':
     case 'Extreme':
     case 'Additional':
-      query = data.weather[0].description;
+      query += data.weather[0].description;
       break;
     default:
-      query = data.weather[0].main;
+      query += data.weather[0].main;
   }
   
   console.log(query);
@@ -69,7 +69,7 @@ function weatherNow(data) {
 
   $(".temp2").html(tempF + "℉");     
   $(".temp1").html(tempC + "℃");
-  $(".city").html(data.name + ", " + data.sys.country);
+  $(".city").html(data.name);
   $(".sub-heading").html('Now');
   $(".description").html(data.weather[0].description);
   
