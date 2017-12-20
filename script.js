@@ -66,7 +66,7 @@ function weatherNow(data) {
 
   $(".temp2").html(tempF + "℉");     
   $(".temp1").html(tempC + "℃");
-  $(".city").html(data.name + ", " + data.sys.country);
+  $(".city").html(data.name);
   $(".sub-heading").html('Now');
   $(".description").html(data.weather[0].description);
   

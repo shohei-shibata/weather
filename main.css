@@ -88,29 +88,29 @@ body {
 }
 
 /* credits at bottom */
-.credit {
-  height: 5%;
+.footer {
+  display: flex;
+  justify-content: space-between;
   position: absolute;
-  bottom: 5px;
+  bottom: 0;
+  left: 50%;
+  width: 96%;
+  margin-left: -48%;
+}
+.credit {
+  display: inline-block;
   font-size: .5em;
   color: #ddd;
-  line-height: 100%;
 }
+
 .credit.me {
-  right: 15px;
-  width: 30%;
-  text-align: right;
+  text-align: center;
 }
 .credit.photo {
-  left: 15px;
-  width: 30%;
-  text-align: left;
+  text-align: right;
 }
 .credit.weather {
-  left: 50%;
-  width: 30%;
-  margin-left: -15%;
-  text-align: center;
+  text-align: left;
 }
 .credit a, .credit a {
   text-decoration: none;
