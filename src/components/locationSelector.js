@@ -2,26 +2,36 @@ import * as React from "react"
 import { useState, useEffect } from "react"
 import { escape, unescape } from "html-escaper"
 
+const appKey = process.env.GATSBY_OPEN_WEATHER_APPKEY
+
 const LocationSelector = ({setLocation}) => {
   const [query, setQuery] = useState("")
+  const [searchResults, setSearchResults] = useState([])
   
   const handleSubmit = e => {
     e.preventDefault()
-    console.log("form submitted", e.target.query.value)
     setQuery(e.target.query.value)
   }
 
   useEffect(() => {
     //console.log("fetch location", query)
     const sanitizedString = escape(query.replaceAll(" ",""))
-    console.log("string sanitized", sanitizedString)
-    fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${sanitizedString}&limit=5&appid=60f3ac8fb5707821382a20440c2e42d1`)
-    .then(res => (
-      console.log("res", res.body)
-    ))
-    },[ query ])
+    if (sanitizedString !== "") {
+      fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${sanitizedString}&limit=5&appid=${appKey}`)
+      .then(res => res.json())
+      .then(data => {
+        setSearchResults(data)
+      })
+    }
+  },[ query ])
 
-  console.log("query", query)
+  const handleSetLocation = e => {
+    const selectionIndex = parseInt(e.target.id.replace("search-result-", ""))
+    setLocation({
+      lon: searchResults[selectionIndex].lon,
+      lat: searchResults[selectionIndex].lat
+    })
+  }
 
   return (
     <div className="location-chooser-container">
@@ -33,6 +43,17 @@ const LocationSelector = ({setLocation}) => {
         </label>
         <button type="submit">Submit</button>
       </form>
+      <div className="search-results">
+        <ul>
+          { searchResults.map((result, index) => (
+            <li key={`search-result-${index}`}>
+              <button onClick={handleSetLocation} id={`search-result-${index}`}>
+                {result.country} - {result.name}, {result.state}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }

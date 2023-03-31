@@ -1,7 +1,7 @@
 import React from "react"
 import { useState } from "react"
-import LocationSelector from "../components/LocationSelector"
-import WeatherResult from "../components/weatherResult"
+import LocationSelector from "./locationSelector"
+import WeatherResult from "./weatherResult"
 
 const App = () => {
   const [location, setLocation] = useState({
