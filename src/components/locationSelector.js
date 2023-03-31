@@ -17,7 +17,7 @@ const LocationSelector = ({setLocation}) => {
     //console.log("fetch location", query)
     const sanitizedString = escape(query.replaceAll(" ",""))
     if (sanitizedString !== "") {
-      fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${sanitizedString}&limit=5&appid=${appKey}`)
+      fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${sanitizedString}&limit=5&appid=${appKey}`)
       .then(res => res.json())
       .then(data => {
         setSearchResults(data)
